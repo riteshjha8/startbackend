@@ -1,0 +1,19 @@
+{
+  "name": "startbackend",
+  "version": "1.0.0",
+  "description": "a basic knowledge about backend",
+  "keywords": [
+    "node"
+  ],
+  "license": "ISC",
+  "author": "ritesh jha",
+  "type": "commonjs",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js"
+  },
+  "dependencies": {
+    "dotenv": "^17.2.4",
+    "express": "^5.2.1"
+  }
+}
