@@ -445,3 +445,13 @@ found 0 vulnerabilities
 PS C:\Users\ASUS\OneDrive\Desktop\startbackend\src> 
 
 ```
+
+PS C:\Users\ASUS\OneDrive\Desktop\startbackend> npm i cookie-parser cors
+
+added 4 packages, and audited 117 packages in 2s
+
+30 packages are looking for funding
+  run `npm fund` for details
+
+found 0 vulnerabilities
+PS C:\Users\ASUS\OneDrive\Desktop\startbackend> 
