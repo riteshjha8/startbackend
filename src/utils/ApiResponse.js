@@ -13,3 +13,5 @@ this.statusCode = statusCode < 400
 
     }
 }
+
+export default ApiResponse
