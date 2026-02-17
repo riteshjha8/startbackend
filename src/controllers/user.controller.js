@@ -23,32 +23,52 @@ const registerUser = asyncHandler( async (req, res) => {
 
 const {fullName, email, username, password }= req.body
 
-console.log("email:", email);
+// console.log("email:", email);
+// console.log(req.body)
 
-if ([fullName,email,username,password].some((field) => field?.trim() === "")
+if ([fullName ,email,username,password].some((field) => field?.trim() === "")
 
 ) {
     throw new ApiError(400,"All fields are required")
 }
- const existedUser =  User.findOne({
-    $or: [{username},{email}]
+ const existedUser = await  User.findOne({
+    $or:[{username},{email}]
 })
 
 if (existedUser) {
     throw new ApiError (409, "user with email or username already exists")
     
 }
-  const avatarLocalpath = req.files?.avatar[0]?.path;
-  const coverImageLocalpath = req.files?.coverImage[0]?.path;
+// console.log(req.files);
+    // support both `upload.fields()` and `upload.single()` usage
+    const avatarLocalpath =  req.files?.avatar?.[0]?.path;
 
-  if (!avatarLocalpath) {
-    throw new ApiError(400,"Avatar file is required")
-    
-  }
+    //const coverImageLocalpath = req.files?.coverImage?.[0]?.path;
 
+
+let coverImageLocalpath;
+
+if (req.files && Array.isArray(req.files.coverImage) && req.files.coverImage.length >0 ){
+    coverImageLocalpath = req.files.coverImage[0].path
+}
+
+
+
+
+    if (!avatarLocalpath) {
+        throw new ApiError(400, "Avatar file is required");
+    }
+
+    const avatar = await uploadOnCloudinary(avatarLocalpath);
  if (!avatar) {
     throw new ApiError(400, "Avatar file is required")
  }
+    let coverImage;
+    if (coverImageLocalpath) {
+        coverImage = await uploadOnCloudinary(coverImageLocalpath);
+    }
+
+
 
  const user = await User.create({
 
@@ -60,10 +80,11 @@ if (existedUser) {
     username: username.toLowerCase()
  })
 
-const createduser = User.findById(user._id).select(
+const createduser = await User.findById(user._id).select(
 
-    "-password -refreshToken"
+    " -password -refreshToken "
 )
+
 if (!createduser) {
     throw new ApiError(500,"something went wrong whule registering the user")
 }
