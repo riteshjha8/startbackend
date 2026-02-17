@@ -46,10 +46,6 @@ if (existedUser) {
     
   }
 
- const avatar = await uploadOnCloudinary(avatarLocalpath)
-
- const coverImage = await uploadOnCloudinary(coverImageLocalpath)
-
  if (!avatar) {
     throw new ApiError(400, "Avatar file is required")
  }
