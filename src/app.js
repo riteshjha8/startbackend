@@ -11,7 +11,8 @@ app.use(cors({
     credentials: true
 }))
 
-app.use(express.json({limit: "16kb"}))
+app.use(express.json({type: ["application/json", "application/hal+json"]
+,limit: "16kb"}))
 app.use(express.urlencoded({extended: true, limit:"16kb"}))
 app.use(express.static("public"))
 app.use(cookieParser())
@@ -24,4 +25,6 @@ app.use("/api/v1/users",userRouter)
 
 // http://localhost:8000/api/v1/users/register
 export default app
+
+
 
